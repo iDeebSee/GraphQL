@@ -3,12 +3,40 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+import {BrowserRouter as Router} from 'react-router-dom'
+
+const client = new ApolloClient({
+  uri: 'http://localhost:4000/graphql',
+  cache: new InMemoryCache(),
+});
+
+
+client
+  .query({
+    query: gql`
+      query {
+        movies {
+          id
+          name
+          genre
+          year
+        }
+      }
+    `,
+  })
+  .then((result) => console.log(result));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
+  <Router>
+    <React.StrictMode>
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
   </React.StrictMode>
+  </Router>
+  
 );
 
 // If you want to start measuring performance in your app, pass a function

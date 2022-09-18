@@ -2,6 +2,7 @@ let express = require('express');
 let path = require('path');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
+var cors = require('cors')
 let mongoose = require('mongoose');
 //Set up default mongoose connection
 let mongoDB = 'mongodb://localhost:27017/moviesdb';//'mongodb+srv://movies:movies0000@movies.ygp7vz1.mongodb.net/test'  //'mongodb://localhost:27017/moviesdb';
@@ -15,6 +16,7 @@ let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
 
 let app = express();
+app.use(cors())
 
 app.use(logger('dev'));
 app.use(express.json());
